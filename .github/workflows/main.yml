@@ -89,12 +89,13 @@
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
+            cp ${{ github.workspace }}/kernel/arch/arm64/boot/dts/qcom/*gemini.dtb .
             pwd
             ls -l ${{ github.workspace }}/kernel/arch/arm64/boot/dts/qcom/*gemini.dtb
             ls -la
             ls -l kernel/arch/arm64/boot/dts/qcom/*gemini.dtb
             #git add config
-            git add kernel/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
+            git add msm8996-xiaomi-gemini.dtb
             #git add kernel/arch/arm64/boot/Image.gz
             git commit -m "自动提交"
             git push origin HEAD:${{ github.ref }}
