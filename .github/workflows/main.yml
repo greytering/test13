@@ -35,13 +35,13 @@
             sudo cp /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.bak
             sudo tee /etc/apt/sources.list.d/ubuntu.sources > /dev/null << EOF
             Types: deb
-            URIs: http://mirrors.aliyun.com/ubuntu-ports/
+            URIs: http://ports.ubuntu.com/ubuntu-ports
             Suites: noble noble-updates noble-backports
             Components: main universe restricted multiverse
             Architectures: arm64
             Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
             Types: deb
-            URIs: https://mirrors.aliyun.com/ubuntu-ports/
+            URIs: https://ports.ubuntu.com/ubuntu-ports
             Suites: noble-security
             Components: main universe restricted multiverse
             Architectures: arm64
