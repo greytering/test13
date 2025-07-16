@@ -23,8 +23,34 @@
         - name: Run a one-line script
           run: |
             echo Hello, world!
+            sudo apt-get update
+            sudo apt install -y \
+            build-essential openssl pkg-config libssl-dev libncurses-dev minizip libelf-dev flex bison libc6-dev libidn11-dev rsync bc lz4 debootstrap git curl \
+            gcc-aarch64-linux-gnu dpkg-dev dpkg qemu-user-static \
+            debhelper-compat libdw-dev libssl-dev
 
-
+        - name: Install libssl-dev:arm64
+          run: |
+            sudo dpkg --add-architecture arm64
+            sudo cp /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.bak
+            sudo tee /etc/apt/sources.list.d/ubuntu.sources > /dev/null << EOF
+            Types: deb
+            URIs: http://mirrors.aliyun.com/ubuntu-ports/
+            Suites: noble noble-updates noble-backports
+            Components: main universe restricted multiverse
+            Architectures: arm64
+            Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+            Types: deb
+            URIs: https://mirrors.aliyun.com/ubuntu-ports/
+            Suites: noble-security
+            Components: main universe restricted multiverse
+            Architectures: arm64
+            Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+            EOF
+            sudo apt clean
+            sudo apt update
+            sudo apt install libssl-dev:arm64 -y
+            
   
         # Runs a set of commands using the runners shell
         - name: Run Download .config script
@@ -43,13 +69,13 @@
 
         - name: Run Download Kernel
           run: |
-            #git clone --depth=1 -b 6.15/main https://github.com/msm8953-mainline/linux.git kernel
+            git clone --depth=1 -b 6.15/main https://github.com/msm8953-mainline/linux.git kernel
             pwd
             ls -la
-            #cp ${{ github.workspace }}/config-postmarketos-qcom-msm8953.aarch64 kernel/.config
+            cp ${{ github.workspace }}/config-postmarketos-qcom-msm8953.aarch64 kernel/.config
             #make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CC=aarch64-linux-gnu-gcc -j$(nproc)
             #make -j$(nproc) ARCH=arm64 KBUILD_DEBARCH=arm64 KDEB_CHANGELOG_DIST=mobile CROSS_COMPILE=aarch64-linux-gnu- CC=aarch64-linux-gnu-gcc bindeb-pkg
-            #make -j$(nproc) ARCH=arm64 KBUILD_DEBARCH=arm64 KDEB_CHANGELOG_DIST=mobile CROSS_COMPILE=aarch64-linux-gnu- CC=aarch64-linux-gnu-gcc dtbs
+            make -j$(nproc) ARCH=arm64 KBUILD_DEBARCH=arm64 KDEB_CHANGELOG_DIST=mobile CROSS_COMPILE=aarch64-linux-gnu- CC=aarch64-linux-gnu-gcc dtbs
             pwd
             ls -la
 
@@ -64,19 +90,7 @@
           run: |
             pwd
             ls -la
-            #cp  ${{ github.workspace }}/config .
-            #ls -la
             git add config
-            git commit -m "自动提交 config"
+            git commit -m "自动提交"
             git push origin HEAD:${{ github.ref }}
             
-            
-        - name: Upload Build file
-          uses: actions/upload-artifact@v4
-          with:
-            name: kernel-config
-            path: |
-              ${{ github.workspace }}/config-postmarketos-qcom-msm8953.aarch64
-              ${{ github.workspace }}/config
-              #${{ github.workspace }}/*.deb
-              #${{ github.workspace }}/kernel/arm/arm64/boot/*
