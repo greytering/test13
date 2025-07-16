@@ -90,7 +90,9 @@
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
             pwd
+            ls -l ${{ github.workspace }}/kernel/arch/arm64/boot/dts/qcom/*gemini.dtb
             ls -la
+            ls -l kernel/arch/arm64/boot/dts/qcom/*gemini.dtb
             #git add config
             #git add kernel/arch/arm64/boot/*
             git add ${{ github.workspace }}/kernel/arch/arm64/boot/dts/qcom/*gemini.dtb
