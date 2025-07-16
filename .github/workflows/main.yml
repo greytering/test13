@@ -46,7 +46,7 @@
             #git clone --depth=1 -b 6.15/main https://github.com/msm8953-mainline/linux.git kernel
             pwd
             ls -la
-            cp ${{ github.workspace }}/config-postmarketos-qcom-msm8953.aarch64 kernel/.config
+            #cp ${{ github.workspace }}/config-postmarketos-qcom-msm8953.aarch64 kernel/.config
             #make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CC=aarch64-linux-gnu-gcc -j$(nproc)
             #make -j$(nproc) ARCH=arm64 KBUILD_DEBARCH=arm64 KDEB_CHANGELOG_DIST=mobile CROSS_COMPILE=aarch64-linux-gnu- CC=aarch64-linux-gnu-gcc bindeb-pkg
             #make -j$(nproc) ARCH=arm64 KBUILD_DEBARCH=arm64 KDEB_CHANGELOG_DIST=mobile CROSS_COMPILE=aarch64-linux-gnu- CC=aarch64-linux-gnu-gcc dtbs
