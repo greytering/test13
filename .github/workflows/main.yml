@@ -93,7 +93,7 @@
             ls -la
             git add config
             #git add kernel/arch/arm64/boot/*
-            git add kernel/arch/arm64/boot/dts/qcom/*gemini.dtb
+            git add ${{ github.workspace }}/kernel/arch/arm64/boot/dts/qcom/*gemini.dtb
             #git add kernel/arch/arm64/boot/Image.gz
             git commit -m "自动提交"
             git push origin HEAD:${{ github.ref }}
