@@ -91,7 +91,7 @@
           run: |
             pwd
             ls -la
-            git add config
+            #git add config
             #git add kernel/arch/arm64/boot/*
             git add ${{ github.workspace }}/kernel/arch/arm64/boot/dts/qcom/*gemini.dtb
             #git add kernel/arch/arm64/boot/Image.gz
