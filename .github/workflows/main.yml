@@ -53,6 +53,22 @@
             pwd
             ls -la
 
+        - name: 设置 Git 用户信息
+          run: |
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        - name: 提交并推送 config 文件
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            pwd
+            ls -la
+            #cp  ${{ github.workspace }}/config .
+            #ls -la
+            git add config
+            git commit -m "自动提交 config"
+            git push origin HEAD:${{ github.ref }}
             
             
         - name: Upload Build file
